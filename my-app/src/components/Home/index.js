@@ -6,7 +6,6 @@ function Home(){
     const [num1, setNum1] = useState(0)
     const [num2, setNum2] = useState(0)
     const [secondNum, setSecondNum] = useState(false)
-    const [solution, setSolution] = useState('')
 
     const calculatorFunc = (e) => {
         let number = parseInt(e.target.value)
@@ -24,7 +23,6 @@ function Home(){
         setNum2(0)
         setSign('')
         setSecondNum(false)
-        setSolution('')
     }
 
     const backSpaceHandler = (e) => {
@@ -101,30 +99,50 @@ function Home(){
     } 
 
     const sumFunc = () => {
+        let num1Copy = num1
         switch(sign){
             case '+':
-                setSolution(num1 + num2)
+                setNum1(num1Copy + num2)
+                setNum2(0)
+                setSign('')
                 break;
             case '-':
-                setSolution(num1 - num2)
+                setNum1(num1Copy - num2)
+                setNum2(0)
+                setSign('')
                 break;
             case '*':
-                setSolution(num1 * num2)
+                setNum1(num1Copy * num2)
+                setNum2(0)
+                setSign('')
                 break;
             case '/':
-                setSolution(num1 / num2)
+                setNum1(num1Copy / num2)
+                setNum2(0)
+                setSign('')
                 break;
             default:
-                setSolution(num1)
+                setNum1(num1Copy)
+                setNum2(0)
+                setSign('')
+                break;
         }
     }
 
+
+
     return(
         <div className="calculator-body">
-            {!solution ?
-                <span className="calculator-display">{`${num1} ${sign} ${num2}`}</span>
+            {
+                sign ?
+
+                    num2 ?
+                            <span className="calculator-display">{`${num1} ${sign} ${num2}`}</span>
+                        :
+
+                            <span className="calculator-display">{`${num1} ${sign}`}</span>
                 :
-                <span className="calculator-display">{solution}</span>
+                    <span className="calculator-display">{num1}</span>
             }
             <input type="number" value={sign} onChange={e => calculatorFunc(e)} onKeyDown={e => backSpaceHandler(e)}/>
 
@@ -135,15 +153,16 @@ function Home(){
 
 
             <div className="calculator-numbers">
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
+                <button value='1' onClick={e => calculatorFunc(e)}>1</button>
+                <button value='2' onClick={e => calculatorFunc(e)}>2</button>
+                <button value='3' onClick={e => calculatorFunc(e)}>3</button>
+                <button value='4' onClick={e => calculatorFunc(e)}>4</button>
+                <button value='5' onClick={e => calculatorFunc(e)}>5</button>
+                <button value='6' onClick={e => calculatorFunc(e)}>6</button>
+                <button value='7' onClick={e => calculatorFunc(e)}>7</button>
+                <button value='8' onClick={e => calculatorFunc(e)}>8</button>
+                <button value='9' onClick={e => calculatorFunc(e)}>9</button>
+                <button value='0' onClick={e => calculatorFunc(e)}>0</button>
             </div>
             <div className="calculator-symbols">
                 <button onClick={() => simpleSymbolFunc('+')}>+</button>
