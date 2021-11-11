@@ -1,6 +1,10 @@
 import { useState } from "react"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField'
+import { pink } from '@mui/material/colors';
+import HistoryIcon from '@mui/icons-material/History';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function Home(){
 
@@ -10,16 +14,36 @@ function Home(){
     const [secondNum, setSecondNum] = useState(false)
     const [fullProblem, setFullProblem] = useState('')
     const [sum, setSum] = useState('')
+    const [calcHistory, setCalcHistory] = useState([])
+    const [showHistory, setShowHistory] = useState(false)
 
     const calculatorFunc = (e) => {
-        let number = parseInt(e.target.value)
-        if (number !== 0 && !number){
-            return;
-        } else{
-            if(!secondNum) num1 ? setNum1( parseInt(num1.toString() + number.toString())) : setNum1(number)
-            else num2 ? setNum2( parseInt(num2.toString() + number.toString())) : setNum2(number)
+        let isDecimal = e.target.value.slice(e.target.value.length - 1)
+        let operatorArr = ["+","-","*","/"]
+        if(operatorArr.includes(isDecimal)){
+            simpleSymbolFunc(isDecimal)
         }
+        let number = parseFloat(e.target.value)
+        let regex = /^\d*\.?\d*$/
+        
+        if (!number && isDecimal !== '.'){
+            return;
+        } else if (regex.test(e.target.value)){
+            if(isDecimal === '.'){
+                if(!secondNum) setNum1(num1.toString() + '.')
+                else{
+                    setNum2(num2.toString() + '.')
+                }
+            }else{
+                if(!secondNum) setNum1(number)
+                else{
+                    setNum2(number)
+                }
+                
+            }
+        }else return
     }
+
 
 
     const clearCalcFunc = () => {
@@ -54,6 +78,8 @@ function Home(){
                     setNum2(0)
                 } 
             }
+        }if(e.key === 'Enter'){
+            sumFunc()
         }
     }
 
@@ -82,7 +108,7 @@ function Home(){
     }
 
     const simpleSymbolFunc = (sign) => {
-        if(sum){
+        if(sum || sum === 0){
             setNum1(sum)
             setSign('')
             setSecondNum(false)
@@ -114,38 +140,51 @@ function Home(){
 
     const sumFunc = () => {
         setFullProblem(`${num1} ${sign} ${num2} =`)
+        let sumCopy;
+        let calcHistoryCopy = calcHistory
         switch(sign){
             case '+':
                 setSum(num1 + num2)
+                sumCopy = num1 + num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
                 setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '-':
                 setSum(num1 - num2)
+                sumCopy = num1 - num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
                 setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '*':
                 setSum(num1 * num2)
+                sumCopy = num1 * num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
                 setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '/':
                 setSum(num1 / num2)
+                sumCopy = num1 / num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
                 setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             default:
                 setSum(num1)
-                setSecondNum(false)
-                setNum2(0)
-                setSign('')
+                setFullProblem(`${num1} =`)
                 break;
         }
+
     }
 
     let inputLabel = 
@@ -161,6 +200,12 @@ function Home(){
         :
         num1
 
+    
+    let toggleHistory = () => {
+        if(showHistory) setShowHistory(false)
+        else setShowHistory(true)
+    }
+
     return(
         <div className="calculator-body">
 
@@ -168,7 +213,7 @@ function Home(){
             id="filled-basic" 
             variant="filled"
             label={fullProblem ? fullProblem : inputLabel}
-            value={sum ? sum : inputValue} 
+            value={sum === 0 || sum ? sum : inputValue} 
             onChange={e => calculatorFunc(e)} 
             onKeyDown={e => backSpaceHandler(e)}
             />
@@ -194,10 +239,14 @@ function Home(){
             <div className="calculator-symbols">
                 <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
                 <Button variant="outlined" onClick={() => simpleSymbolFunc('-')}>-</Button>
-                <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>*</Button>
+                <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>×</Button>
                 <Button variant="outlined" onClick={() => simpleSymbolFunc('/')}>÷</Button>
+                <Button variant="outlined">.</Button>
             </div>
             <Button variant="outlined" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
+            <Button><HistoryIcon sx={{ color: pink[300] }} onClick={toggleHistory}/></Button>
+            {showHistory && <Button><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
+            {showHistory && calcHistory.map(e => <div>{e}</div>)}
         </div>
     )
 }
