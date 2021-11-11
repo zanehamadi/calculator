@@ -45,7 +45,6 @@ function Home(){
     }
 
 
-
     const clearCalcFunc = () => {
         setNum1(0)
         setNum2(0)
@@ -185,6 +184,10 @@ function Home(){
                 break;
         }
 
+    }
+
+    const negateFunc = () => {
+        if(secondNum){}
     }
 
     let inputLabel = 
