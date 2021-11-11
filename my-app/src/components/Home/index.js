@@ -1,4 +1,10 @@
 import { useState } from "react"
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField'
+import { pink } from '@mui/material/colors';
+import HistoryIcon from '@mui/icons-material/History';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function Home(){
 
@@ -6,15 +12,36 @@ function Home(){
     const [num1, setNum1] = useState(0)
     const [num2, setNum2] = useState(0)
     const [secondNum, setSecondNum] = useState(false)
+    const [fullProblem, setFullProblem] = useState('')
+    const [sum, setSum] = useState('')
+    const [calcHistory, setCalcHistory] = useState([])
+    const [showHistory, setShowHistory] = useState(false)
 
     const calculatorFunc = (e) => {
-        let number = parseInt(e.target.value)
-        if (number !== 0 && !number){
-            return;
-        } else{
-            if(!secondNum) num1 ? setNum1( parseInt(num1.toString() + number.toString())) : setNum1(number)
-            else num2 ? setNum2( parseInt(num2.toString() + number.toString())) : setNum2(number)
+        let isDecimal = e.target.value.slice(e.target.value.length - 1)
+        let operatorArr = ["+","-","*","/"]
+        if(operatorArr.includes(isDecimal)){
+            simpleSymbolFunc(isDecimal)
         }
+        let number = parseFloat(e.target.value)
+        let regex = /^\d*\.?\d*$/
+        
+        if (!number && isDecimal !== '.'){
+            return;
+        } else if (regex.test(e.target.value)){
+            if(isDecimal === '.'){
+                if(!secondNum) setNum1(num1.toString() + '.')
+                else{
+                    setNum2(num2.toString() + '.')
+                }
+            }else{
+                if(!secondNum) setNum1(number)
+                else{
+                    setNum2(number)
+                }
+                
+            }
+        }else return
     }
 
 
@@ -23,6 +50,8 @@ function Home(){
         setNum2(0)
         setSign('')
         setSecondNum(false)
+        setSum('')
+        setFullProblem('')
     }
 
     const backSpaceHandler = (e) => {
@@ -33,9 +62,9 @@ function Home(){
                     numArr.pop()
                     if(parseInt(numArr[0])) setNum1(parseInt(numArr.join('')))
                     else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum1(parseInt(numArr.join('')))
-                    else setNum1('')
+                    else setNum1(0)
                 }else{
-                    setNum1('')
+                    setNum1(0)
                 }
             }else{
                 if(num2){
@@ -48,6 +77,8 @@ function Home(){
                     setNum2(0)
                 } 
             }
+        }if(e.key === 'Enter'){
+            sumFunc()
         }
     }
 
@@ -66,8 +97,8 @@ function Home(){
             if(num2){
                 let numArr = num2.toString().split('')
                 numArr.pop()
-                if(parseInt(numArr[0])) setNum1(parseInt(numArr.join('')))
-                else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum1(parseInt(numArr.join('')))
+                if(parseInt(numArr[0])) setNum2(parseInt(numArr.join('')))
+                else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum2(parseInt(numArr.join('')))
                 else setNum2(0)
             }else{
                 setNum2(0)
@@ -76,6 +107,14 @@ function Home(){
     }
 
     const simpleSymbolFunc = (sign) => {
+        if(sum || sum === 0){
+            setNum1(sum)
+            setSign('')
+            setSecondNum(false)
+            setNum2(0)
+            setSum('')
+            setFullProblem('')
+        }
         switch(sign){
             case '+': 
                 setSign('+');
@@ -99,78 +138,118 @@ function Home(){
     } 
 
     const sumFunc = () => {
-        let num1Copy = num1
+        setFullProblem(`${num1} ${sign} ${num2} =`)
+        let sumCopy;
+        let calcHistoryCopy = calcHistory
         switch(sign){
             case '+':
-                setNum1(num1Copy + num2)
+                setSum(num1 + num2)
+                sumCopy = num1 + num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
+                setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '-':
-                setNum1(num1Copy - num2)
+                setSum(num1 - num2)
+                sumCopy = num1 - num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
+                setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '*':
-                setNum1(num1Copy * num2)
+                setSum(num1 * num2)
+                sumCopy = num1 * num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
+                setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             case '/':
-                setNum1(num1Copy / num2)
+                setSum(num1 / num2)
+                sumCopy = num1 / num2
+                calcHistoryCopy.unshift(`${num1} ${sign} ${num2} = ${sumCopy}`)
+                setCalcHistory(calcHistoryCopy)
+                setSecondNum(false)
                 setNum2(0)
                 setSign('')
                 break;
             default:
-                setNum1(num1Copy)
-                setNum2(0)
-                setSign('')
+                setSum(num1)
+                setFullProblem(`${num1} =`)
                 break;
         }
+
     }
 
+    const negateFunc = () => {
+        if(secondNum){}
+    }
 
+    let inputLabel = 
+    sign ?  
+        `${num1} ${sign}`
+        :
+
+        ''
+
+    let inputValue =
+    sign ?
+        num2
+        :
+        num1
+
+    
+    let toggleHistory = () => {
+        if(showHistory) setShowHistory(false)
+        else setShowHistory(true)
+    }
 
     return(
         <div className="calculator-body">
-            {
-                sign ?
 
-                    num2 ?
-                            <span className="calculator-display">{`${num1} ${sign} ${num2}`}</span>
-                        :
-
-                            <span className="calculator-display">{`${num1} ${sign}`}</span>
-                :
-                    <span className="calculator-display">{num1}</span>
-            }
-            <input type="number" value={sign} onChange={e => calculatorFunc(e)} onKeyDown={e => backSpaceHandler(e)}/>
+            <TextField 
+            id="filled-basic" 
+            variant="filled"
+            label={fullProblem ? fullProblem : inputLabel}
+            value={sum === 0 || sum ? sum : inputValue} 
+            onChange={e => calculatorFunc(e)} 
+            onKeyDown={e => backSpaceHandler(e)}
+            />
 
             <div className="calculator-keys">
-                <button className="calculator-back-button" onClick={backSpaceButtonFunc}>⌫</button>
-                <button onClick={clearCalcFunc}>CLEAR</button>
+                <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
+                <Button variant="outlined" onClick={clearCalcFunc}>CLEAR</Button>
             </div>
 
 
             <div className="calculator-numbers">
-                <button value='1' onClick={e => calculatorFunc(e)}>1</button>
-                <button value='2' onClick={e => calculatorFunc(e)}>2</button>
-                <button value='3' onClick={e => calculatorFunc(e)}>3</button>
-                <button value='4' onClick={e => calculatorFunc(e)}>4</button>
-                <button value='5' onClick={e => calculatorFunc(e)}>5</button>
-                <button value='6' onClick={e => calculatorFunc(e)}>6</button>
-                <button value='7' onClick={e => calculatorFunc(e)}>7</button>
-                <button value='8' onClick={e => calculatorFunc(e)}>8</button>
-                <button value='9' onClick={e => calculatorFunc(e)}>9</button>
-                <button value='0' onClick={e => calculatorFunc(e)}>0</button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='1' onClick={e => calculatorFunc(e)}>1</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='2' onClick={e => calculatorFunc(e)}>2</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='3' onClick={e => calculatorFunc(e)}>3</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='4' onClick={e => calculatorFunc(e)}>4</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='5' onClick={e => calculatorFunc(e)}>5</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='6' onClick={e => calculatorFunc(e)}>6</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='7' onClick={e => calculatorFunc(e)}>7</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='8' onClick={e => calculatorFunc(e)}>8</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='9' onClick={e => calculatorFunc(e)}>9</Button>
+                <Button variant="contained" style={{marginLeft:"5px"}} value='0' onClick={e => calculatorFunc(e)}>0</Button>
             </div>
             <div className="calculator-symbols">
-                <button onClick={() => simpleSymbolFunc('+')}>+</button>
-                <button onClick={() => simpleSymbolFunc('-')}>-</button>
-                <button onClick={() => simpleSymbolFunc('*')}>*</button>
-                <button onClick={() => simpleSymbolFunc('/')}>÷</button>
+                <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
+                <Button variant="outlined" onClick={() => simpleSymbolFunc('-')}>-</Button>
+                <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>×</Button>
+                <Button variant="outlined" onClick={() => simpleSymbolFunc('/')}>÷</Button>
+                <Button variant="outlined">.</Button>
             </div>
-            <button onClick={sumFunc}>=</button>
+            <Button variant="outlined" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
+            <Button><HistoryIcon sx={{ color: pink[300] }} onClick={toggleHistory}/></Button>
+            {showHistory && <Button><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
+            {showHistory && calcHistory.map(e => <div>{e}</div>)}
         </div>
     )
 }
