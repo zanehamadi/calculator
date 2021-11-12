@@ -1,0 +1,49 @@
+.calculator-numbers{
+    display: grid;
+    width: 20vw;
+    margin: 0;
+    grid-template-areas: '7 8 9'
+                         '4 5 6'
+                         '1 2 3'
+                        '.  0 .';
+}
+
+#button0{
+    grid-area: '0'
+}
+#button1{
+    grid-area: '1'
+    
+}
+#button2{
+    grid-area: '2'
+    
+}
+#button3{
+    grid-area: '3'
+    
+}
+#button4{
+    grid-area: '4'
+    
+}
+#button5{
+    grid-area: '5'
+    
+}
+#button6{
+    grid-area: '6'
+    
+}
+#button7{
+    grid-area: '7'
+    
+}
+#button8{
+    grid-area: '8'
+    
+}
+#button9{
+    grid-area: '9'
+    
+}

@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import { pink } from '@mui/material/colors';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteIcon from '@mui/icons-material/Delete';
+import './home.css'
 
 
 function Home(){
@@ -16,10 +17,10 @@ function Home(){
     const [sum, setSum] = useState('')
     const [calcHistory, setCalcHistory] = useState([])
     const [showHistory, setShowHistory] = useState(false)
+    const [backspace, setBackspace] = useState(false)
 
     const calculatorFunc = (e) => {
-
-        
+        if(backspace) return setBackspace(false);
         let isDecimal = e.target.value.slice(e.target.value.length - 1)
         let operatorArr = ["+","-","*","/"]
         if(operatorArr.includes(isDecimal)){
@@ -56,6 +57,17 @@ function Home(){
     }
 
     const numButtonFunc = (e) => {
+
+        if(sum){
+            console.log(e.target.value)
+            setNum2(0)
+            setNum1(0)
+            setSign('')
+            setSecondNum(false)
+            setSum('')
+            setFullProblem('')
+            return setNum1(e.target.value)
+        }
 
         let number = parseFloat(e.target.value)
         let regex = /^\d*\.?\d*$/
@@ -107,14 +119,15 @@ function Home(){
     }
 
     const backSpaceHandler = (e) => {
+        
         if(e.key === 'Backspace'){
+            setBackspace(true)
             if(!secondNum){
                 if(num1){
                     let numArr = num1.toString().split('')
                     numArr.pop()
-                    if(parseInt(numArr[0])) setNum1(parseInt(numArr.join('')))
-                    else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum1(parseInt(numArr.join('')))
-                    else setNum1(0)
+                    if(!numArr.length) setNum1(0) 
+                    else setNum1(numArr.join(''))
                 }else{
                     setNum1(0)
                 }
@@ -122,9 +135,8 @@ function Home(){
                 if(num2){
                     let numArr = num2.toString().split('')
                     numArr.pop()
-                    if(parseInt(numArr[0])) setNum2(parseInt(numArr.join('')))
-                    else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum2(parseInt(numArr.join('')))
-                    else setNum2(0)
+                    if(!numArr.length) setNum1(0) 
+                    else setNum2(numArr.join(''))
                 }else{
                     setNum2(0)
                 } 
@@ -135,13 +147,13 @@ function Home(){
     }
 
     const backSpaceButtonFunc = () => {
+        setBackspace(true)
         if(!secondNum){
             if(num1){
-                let numArr = num1.toString().split('')
-                numArr.pop()
-                if(parseInt(numArr[0])) setNum1(parseInt(numArr.join('')))
-                else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum1(parseInt(numArr.join('')))
-                else setNum1(0)
+                    let numArr = num1.toString().split('')
+                    numArr.pop()
+                    if(!numArr.length) setNum1(0) 
+                    else setNum1(numArr.join(''))
             }else{
                 setNum1(0)
             }
@@ -149,9 +161,8 @@ function Home(){
             if(num2){
                 let numArr = num2.toString().split('')
                 numArr.pop()
-                if(parseInt(numArr[0])) setNum2(parseInt(numArr.join('')))
-                else if(!parseInt(numArr[0]) && numArr.length > 1 ) setNum2(parseInt(numArr.join('')))
-                else setNum2(0)
+                if(!numArr.length) setNum2(0) 
+                else setNum2(numArr.join(''))
             }else{
                 setNum2(0)
             }
@@ -263,10 +274,16 @@ function Home(){
         else setShowHistory(true)
     }
 
-    const squareRoot = () => {
+    const powerOf2 = () => {
         if(sum) setSum(sum**2)
         else if(secondNum) setNum2(num2**2)
         else setNum1(num1**2)
+    }
+
+    const squareRoot2 = () => {
+        if(sum) setSum(sum**.5)
+        else if(secondNum) setNum2(num2**.5)
+        else setNum1(num1**.5)
     }
 
 
@@ -285,22 +302,22 @@ function Home(){
             <div className="calculator-keys">
                 <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
                 <Button variant="outlined" onClick={clearCalcFunc}>CLEAR</Button>
-                <Button variant="outlined" onClick={squareRoot}>𝑥2</Button>
+                <Button variant="outlined" onClick={powerOf2}>𝑥2</Button>
+                <Button variant="outlined" onClick={squareRoot2}>√</Button>
             </div>
 
 
             <div className="calculator-numbers">
-                <Button variant="contained" style={{marginLeft:"5px"}} value='1' onClick={e => numButtonFunc(e)}>1</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='2' onClick={e => numButtonFunc(e)}>2</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='3' onClick={e => numButtonFunc(e)}>3</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='4' onClick={e => numButtonFunc(e)}>4</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='5' onClick={e => numButtonFunc(e)}>5</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='6' onClick={e => numButtonFunc(e)}>6</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='7' onClick={e => numButtonFunc(e)}>7</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='8' onClick={e => numButtonFunc(e)}>8</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='9' onClick={e => numButtonFunc(e)}>9</Button>
-                <Button variant="contained" style={{marginLeft:"5px"}} value='0' onClick={e => numButtonFunc(e)}>0</Button>
-                
+                <Button variant="contained" value='1' id="button1" onClick={e => numButtonFunc(e)}>1</Button>
+                <Button variant="contained" value='2' id="button2" onClick={e => numButtonFunc(e)}>2</Button>
+                <Button variant="contained" value='3' id="button3" onClick={e => numButtonFunc(e)}>3</Button>
+                <Button variant="contained" value='4' id="button4" onClick={e => numButtonFunc(e)}>4</Button>
+                <Button variant="contained" value='5' id="button5" onClick={e => numButtonFunc(e)}>5</Button>
+                <Button variant="contained" value='6' id="button6" onClick={e => numButtonFunc(e)}>6</Button>
+                <Button variant="contained" value='7' id="button7" onClick={e => numButtonFunc(e)}>7</Button>
+                <Button variant="contained" value='8' id="button8" onClick={e => numButtonFunc(e)}>8</Button>
+                <Button variant="contained" value='9' id="button9" onClick={e => numButtonFunc(e)}>9</Button>
+                <Button variant="contained" value='0' id="button0" onClick={e => numButtonFunc(e)}>0</Button>
             </div>
             <div className="calculator-symbols">
                 <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
