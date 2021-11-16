@@ -299,38 +299,32 @@ function Home(){
             onKeyDown={e => backSpaceHandler(e)}
             />
 
-            <div className="calculator-keys">
-                <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
-                <Button variant="outlined" onClick={clearCalcFunc}>CLEAR</Button>
-                <Button variant="outlined" onClick={powerOf2}>𝑥2</Button>
-                <Button variant="outlined" onClick={squareRoot2}>√</Button>
-            </div>
+            <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
+            <Button variant="outlined" onClick={clearCalcFunc}>CLEAR</Button>
+            <Button variant="outlined" onClick={powerOf2}>𝑥2</Button>
+            <Button variant="outlined" onClick={squareRoot2}>√</Button>
 
 
-            <div className="calculator-numbers">
-                <Button variant="contained" value='1' id="button1" onClick={e => numButtonFunc(e)}>1</Button>
-                <Button variant="contained" value='2' id="button2" onClick={e => numButtonFunc(e)}>2</Button>
-                <Button variant="contained" value='3' id="button3" onClick={e => numButtonFunc(e)}>3</Button>
-                <Button variant="contained" value='4' id="button4" onClick={e => numButtonFunc(e)}>4</Button>
-                <Button variant="contained" value='5' id="button5" onClick={e => numButtonFunc(e)}>5</Button>
-                <Button variant="contained" value='6' id="button6" onClick={e => numButtonFunc(e)}>6</Button>
-                <Button variant="contained" value='7' id="button7" onClick={e => numButtonFunc(e)}>7</Button>
-                <Button variant="contained" value='8' id="button8" onClick={e => numButtonFunc(e)}>8</Button>
-                <Button variant="contained" value='9' id="button9" onClick={e => numButtonFunc(e)}>9</Button>
-                <Button variant="contained" value='0' id="button0" onClick={e => numButtonFunc(e)}>0</Button>
-            </div>
-            <div className="calculator-symbols">
-                <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
-                <Button variant="outlined" onClick={() => simpleSymbolFunc('-')}>-</Button>
-                <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>×</Button>
-                <Button variant="outlined" onClick={() => simpleSymbolFunc('/')}>÷</Button>
-                <Button variant="outlined" onClick={decimalButton}>.</Button>
-            </div>
+            <Button variant="contained" value='1' id="button1" onClick={e => numButtonFunc(e)}>1</Button>
+            <Button variant="contained" value='2' id="button2" onClick={e => numButtonFunc(e)}>2</Button>
+            <Button variant="contained" value='3' id="button3" onClick={e => numButtonFunc(e)}>3</Button>
+            <Button variant="contained" value='4' id="button4" onClick={e => numButtonFunc(e)}>4</Button>
+            <Button variant="contained" value='5' id="button5" onClick={e => numButtonFunc(e)}>5</Button>
+            <Button variant="contained" value='6' id="button6" onClick={e => numButtonFunc(e)}>6</Button>
+            <Button variant="contained" value='7' id="button7" onClick={e => numButtonFunc(e)}>7</Button>
+            <Button variant="contained" value='8' id="button8" onClick={e => numButtonFunc(e)}>8</Button>
+            <Button variant="contained" value='9' id="button9" onClick={e => numButtonFunc(e)}>9</Button>
+            <Button variant="contained" value='0' id="button0" onClick={e => numButtonFunc(e)}>0</Button>
+            <Button variant="contained" id="decimalButton" onClick={decimalButton}>.</Button>
+            <Button variant="contained" id="negateButton" onClick={negateFunc}>+/-</Button>
+            <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
+            <Button variant="outlined" onClick={() => simpleSymbolFunc('-')}>-</Button>
+            <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>×</Button>
+            <Button variant="outlined" onClick={() => simpleSymbolFunc('/')}>÷</Button>
             <Button variant="outlined" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
             <Button><HistoryIcon sx={{ color: pink[300] }} onClick={toggleHistory}/></Button>
-            <Button variant="outlined" onClick={negateFunc}>+/-</Button>
             {showHistory && <Button><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
-            {showHistory && calcHistory.map(e => <div>{e}</div>)}
+            {showHistory && calcHistory.map(e => <p>{e}</p>)}
         </div>
     )
 }

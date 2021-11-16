@@ -1,49 +1,116 @@
-.calculator-numbers{
+.calculator-body{
+    border-radius: 1px solid black;;
+    background-color: white;
+    width: 326px;
+    height: 390px;
+}
+.calculator-numbers-container{
     display: grid;
     width: 20vw;
-    margin: 0;
-    grid-template-areas: '7 8 9'
-                         '4 5 6'
-                         '1 2 3'
-                        '.  0 .';
+    margin: 0px;
+    grid-template-areas: 'seven eight nine'
+                         'four five six'
+                         'one two three'
+                        'negate  zero decimal';
 }
 
+
 #button0{
-    grid-area: '0'
+    grid-area: zero;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
 }
 #button1{
-    grid-area: '1'
+    grid-area: one;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button2{
-    grid-area: '2'
+    grid-area: two;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button3{
-    grid-area: '3'
+    grid-area: three;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button4{
-    grid-area: '4'
+    grid-area: four;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button5{
-    grid-area: '5'
+    grid-area: five;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button6{
-    grid-area: '6'
+    grid-area: six;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button7{
-    grid-area: '7'
+    grid-area: seven;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button8{
-    grid-area: '8'
+    grid-area: eight;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
 }
 #button9{
-    grid-area: '9'
+    grid-area: nine;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
     
+}
+
+#decimalButton{
+    grid-area: decimal;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+}
+
+#negateButton{
+    grid-area: negate;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+}
+
+
+#filled-basic{
+    width: 400px;
 }
