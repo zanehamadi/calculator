@@ -1,19 +1,26 @@
-.calculator-body{
+/* .calculator-body{
     border-radius: 1px solid black;;
     background-color: white;
     width: 326px;
     height: 390px;
-}
-.calculator-numbers-container{
     display: grid;
     width: 20vw;
     margin: 0px;
-    grid-template-areas: 'seven eight nine'
-                         'four five six'
-                         'one two three'
-                        'negate  zero decimal';
+    grid-template-areas: '. display .'
+                         'seven eight nine multi'
+                         'four five six sub'
+                         'one two three plus'
+                        'negate zero decimal equals';
 }
-
+#sub-button{
+    grid-area: sub;
+}
+#multi-button{
+    grid-area: multi;
+}
+#plus-button{
+    grid-area: plus;
+}
 
 #button0{
     grid-area: zero;
@@ -112,5 +119,10 @@
 
 
 #filled-basic{
+    grid-area: display;
     width: 400px;
 }
+
+#equal-button{
+    grid-area: equals;
+} */

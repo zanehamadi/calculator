@@ -18,6 +18,7 @@ function Home(){
     const [calcHistory, setCalcHistory] = useState([])
     const [showHistory, setShowHistory] = useState(false)
     const [backspace, setBackspace] = useState(false)
+    console.log(sum)
 
     const calculatorFunc = (e) => {
         if(backspace) return setBackspace(false);
@@ -110,12 +111,24 @@ function Home(){
 
 
     const clearCalcFunc = () => {
+
         setNum1(0)
         setNum2(0)
         setSign('')
         setSecondNum(false)
         setSum('')
         setFullProblem('')
+    }
+    const clearRecent = () => {
+        secondNum ?
+
+            sum ?
+
+                clearCalcFunc()
+                :
+                setNum2(0)
+        :
+        setNum1(0)
     }
 
     const backSpaceHandler = (e) => {
@@ -300,7 +313,8 @@ function Home(){
             />
 
             <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
-            <Button variant="outlined" onClick={clearCalcFunc}>CLEAR</Button>
+            <Button variant="outlined" onClick={clearCalcFunc}>C</Button>
+            <Button variant="outlined" onClick={clearRecent}>CE</Button>
             <Button variant="outlined" onClick={powerOf2}>𝑥2</Button>
             <Button variant="outlined" onClick={squareRoot2}>√</Button>
 
@@ -317,11 +331,11 @@ function Home(){
             <Button variant="contained" value='0' id="button0" onClick={e => numButtonFunc(e)}>0</Button>
             <Button variant="contained" id="decimalButton" onClick={decimalButton}>.</Button>
             <Button variant="contained" id="negateButton" onClick={negateFunc}>+/-</Button>
-            <Button variant="outlined" onClick={() => simpleSymbolFunc('+')}>+</Button>
-            <Button variant="outlined" onClick={() => simpleSymbolFunc('-')}>-</Button>
-            <Button variant="outlined" onClick={() => simpleSymbolFunc('*')}>×</Button>
-            <Button variant="outlined" onClick={() => simpleSymbolFunc('/')}>÷</Button>
-            <Button variant="outlined" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
+            <Button variant="outlined" id="plus-button" onClick={() => simpleSymbolFunc('+')}>+</Button>
+            <Button variant="outlined" id="sub-button" onClick={() => simpleSymbolFunc('-')}>-</Button>
+            <Button variant="outlined" id="multi-button" onClick={() => simpleSymbolFunc('*')}>×</Button>
+            <Button variant="outlined" id="div-button" onClick={() => simpleSymbolFunc('/')}>÷</Button>
+            <Button variant="outlined" id="equal-button" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
             <Button><HistoryIcon sx={{ color: pink[300] }} onClick={toggleHistory}/></Button>
             {showHistory && <Button><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
             {showHistory && calcHistory.map(e => <p>{e}</p>)}
