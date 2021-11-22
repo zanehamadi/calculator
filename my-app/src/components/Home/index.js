@@ -305,6 +305,7 @@ function Home(){
 
             <TextField 
             id="filled-basic" 
+            className="input-area"
             variant="filled"
             label={fullProblem ? fullProblem : inputLabel}
             value={sum === 0 || sum ? sum : inputValue} 
@@ -312,11 +313,11 @@ function Home(){
             onKeyDown={e => backSpaceHandler(e)}
             />
 
-            <Button variant="outlined" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
-            <Button variant="outlined" onClick={clearCalcFunc}>C</Button>
-            <Button variant="outlined" onClick={clearRecent}>CE</Button>
-            <Button variant="outlined" onClick={powerOf2}>𝑥2</Button>
-            <Button variant="outlined" onClick={squareRoot2}>√</Button>
+            <Button variant="outlined" id="back-but" className="calculator-back-Button" onClick={backSpaceButtonFunc}>⌫</Button>
+            <Button variant="outlined" id="clear-but" onClick={clearCalcFunc}>C</Button>
+            <Button variant="outlined" id="clear-recent-but" onClick={clearRecent}>CE</Button>
+            <Button variant="outlined" id="squared-but" onClick={powerOf2}>𝑥2</Button>
+            <Button variant="outlined" id="square-root" onClick={squareRoot2}>√</Button>
 
 
             <Button variant="contained" value='1' id="button1" onClick={e => numButtonFunc(e)}>1</Button>
@@ -336,9 +337,13 @@ function Home(){
             <Button variant="outlined" id="multi-button" onClick={() => simpleSymbolFunc('*')}>×</Button>
             <Button variant="outlined" id="div-button" onClick={() => simpleSymbolFunc('/')}>÷</Button>
             <Button variant="outlined" id="equal-button" style={{backgroundColor:"pink"}} onClick={sumFunc}>=</Button>
-            <Button><HistoryIcon sx={{ color: pink[300] }} onClick={toggleHistory}/></Button>
-            {showHistory && <Button><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
-            {showHistory && calcHistory.map(e => <p>{e}</p>)}
+            <Button id="history-but"  onClick={toggleHistory}><HistoryIcon sx={{ color: pink[300] }}/></Button>
+            {showHistory && <Button id="delete-history" onClick={() => setCalcHistory([])}><DeleteIcon sx={{ color: pink[200]}} onClick={() => setCalcHistory([])} /></Button>}
+            <div className="history-para">
+                {showHistory && calcHistory.map(e => <p>{e}</p>)}
+            </div>
+            <Button variant="contained" disabled={true} id="filler-but1"></Button>
+            
         </div>
     )
 }

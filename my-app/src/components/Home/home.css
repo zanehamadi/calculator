@@ -1,4 +1,4 @@
-/* .calculator-body{
+.calculator-body{
     border-radius: 1px solid black;;
     background-color: white;
     width: 326px;
@@ -6,11 +6,53 @@
     display: grid;
     width: 20vw;
     margin: 0px;
-    grid-template-areas: '. display .'
+    grid-template-areas: 'display display display display'
+                        'CE C squared back'
                          'seven eight nine multi'
                          'four five six sub'
                          'one two three plus'
-                        'negate zero decimal equals';
+                        'negate zero decimal divide'
+                        'placeholder squareroot history equals'
+                        'delete-history delete-history history-para history-para';
+}
+#delete-history{
+    grid-area: delete-history;
+
+}
+.history-para{
+    grid-area: history-para;
+    max-height: 100px;
+    overflow-y: auto;
+
+}
+.input-area{
+    grid-area: display;
+}
+
+#back-but{
+    grid-area: back;
+}
+#squared-but{
+    grid-area: squared
+}
+
+#clear-recent-but{
+    grid-area: CE
+}
+#clear-but{
+    grid-area: C
+}
+#div-button{
+    grid-area: divide;
+}
+#history-but{
+    grid-area: history;
+}
+#square-root{
+    grid-area: squareroot;
+}
+#filler-but1{
+    grid-area: placeholder;
 }
 #sub-button{
     grid-area: sub;
@@ -118,11 +160,7 @@
 }
 
 
-#filled-basic{
-    grid-area: display;
-    width: 400px;
-}
 
 #equal-button{
     grid-area: equals;
-} */
+} 
