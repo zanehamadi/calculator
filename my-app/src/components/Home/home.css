@@ -1,0 +1,166 @@
+.calculator-body{
+    border-radius: 1px solid black;;
+    background-color: white;
+    width: 326px;
+    height: 390px;
+    display: grid;
+    width: 20vw;
+    margin: 0px;
+    grid-template-areas: 'display display display display'
+                        'CE C squared back'
+                         'seven eight nine multi'
+                         'four five six sub'
+                         'one two three plus'
+                        'negate zero decimal divide'
+                        'placeholder squareroot history equals'
+                        'delete-history delete-history history-para history-para';
+}
+#delete-history{
+    grid-area: delete-history;
+
+}
+.history-para{
+    grid-area: history-para;
+    max-height: 100px;
+    overflow-y: auto;
+
+}
+.input-area{
+    grid-area: display;
+}
+
+#back-but{
+    grid-area: back;
+}
+#squared-but{
+    grid-area: squared
+}
+
+#clear-recent-but{
+    grid-area: CE
+}
+#clear-but{
+    grid-area: C
+}
+#div-button{
+    grid-area: divide;
+}
+#history-but{
+    grid-area: history;
+}
+#square-root{
+    grid-area: squareroot;
+}
+#filler-but1{
+    grid-area: placeholder;
+}
+#sub-button{
+    grid-area: sub;
+}
+#multi-button{
+    grid-area: multi;
+}
+#plus-button{
+    grid-area: plus;
+}
+
+#button0{
+    grid-area: zero;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+}
+#button1{
+    grid-area: one;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button2{
+    grid-area: two;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button3{
+    grid-area: three;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button4{
+    grid-area: four;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button5{
+    grid-area: five;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button6{
+    grid-area: six;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button7{
+    grid-area: seven;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button8{
+    grid-area: eight;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+#button9{
+    grid-area: nine;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+    
+}
+
+#decimalButton{
+    grid-area: decimal;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+}
+
+#negateButton{
+    grid-area: negate;
+    border-radius: 0px;
+    border: 1px solid black;
+    width: 133.3333333px;
+
+}
+
+
+
+#equal-button{
+    grid-area: equals;
+} 
